@@ -32,15 +32,15 @@ class BotInterface:
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 command = event.text.lower()
                 data_store.create_table(conn)
-                user_info = core.tools.get_profile_info(event.user_id)
-                city_id = user_info[0].get('city').get('id')
-                birthday = user_info[0].get('bdate')
-                f_name = user_info[0].get('first_name')
-                birth_year = birthday.split('.')[2]
-                age_from = current_year - int(birth_year) - 5
-                age_to = current_year - int(birth_year)
-                sex = user_info[0].get('sex')
-                sex = 1 if sex == 2 else 2
+#                 user_info = core.tools.get_profile_info(event.user_id)
+#                 city_id = user_info[0].get('city').get('id')
+#                 birthday = user_info[0].get('bdate')
+#                 f_name = user_info[0].get('first_name')
+#                 birth_year = birthday.split('.')[2]
+#                 age_from = current_year - int(birth_year) - 5
+#                 age_to = current_year - int(birth_year)
+#                 sex = user_info[0].get('sex')
+#                 sex = 1 if sex == 2 else 2
 
                 if command == 'привет':
                     self.message_send(event.user_id, f'Привет, {f_name}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
