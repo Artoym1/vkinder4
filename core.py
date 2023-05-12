@@ -12,26 +12,14 @@ class VkTools():
     def get_profile_info(self, user_id):
 
         try:
-            info = self.ext_api.method('users.get',
+            user_info = self.ext_api.method('users.get',
                                        {'user_id': user_id,
                                         'fields': 'city,bdate,sex,relation,home_town'
                                         }
                                        )
-            # user_info = {'name': info['first_name'] + ' ' + info['last_name'],
-            #              'id': info['id'],
-            #              'bdate': info['bdate'] if 'bdate' in info else None,
-            #              'home_town': info['home_town'],
-            #              'sex': info['sex'],
-            #              'city': info['city']['id']
-            #              }
-            # return user_info
-            return info
+            return user_info
         except ApiError:
             return
-
-
-
-
 
     def user_serch(self, city_id, age_from, age_to, sex, relation, offset=None):
         city_id = user_info[0].get('city').get('id')
@@ -39,7 +27,7 @@ class VkTools():
         f_name = user_info[0].get('first_name')
         birth_year = birthday.split('.')[2]
         age_from = current_year - int(birth_year) - 5
-        age_to = current_year - int(birth_year)
+        age_to = current_year - int(birth_year) + 1
         sex = user_info[0].get('sex')
         sex = 1 if sex == 2 else 2
         
@@ -52,7 +40,6 @@ class VkTools():
                                         'status': relation,
                                         'count': 10,
                                         'offset': offset
-
                                         })
 
         try:
