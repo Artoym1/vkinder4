@@ -34,22 +34,32 @@ class VkTools():
 
 
     def user_serch(self, city_id, age_from, age_to, sex, relation, offset=None):
+        city_id = user_info[0].get('city').get('id')
+        birthday = user_info[0].get('bdate')
+        f_name = user_info[0].get('first_name')
+        birth_year = birthday.split('.')[2]
+        age_from = current_year - int(birth_year) - 5
+        age_to = current_year - int(birth_year)
+        sex = user_info[0].get('sex')
+        sex = 1 if sex == 2 else 2
+        
+        
+        profiles = self.ext_api.method('users.search',
+                                       {'city_id': city_id,
+                                        'age_from': age_from,
+                                        'age_to': age_to,
+                                        'sex': sex,
+                                        'status': relation,
+                                        'count': 10,
+                                        'offset': offset
+
+                                        })
+
         try:
-            profiles = self.ext_api.method('users.search',
-                                           {'city_id': city_id,
-                                            'age_from': age_from,
-                                            'age_to': age_to,
-                                            'sex': sex,
-                                            'status': relation,
-                                            'count': 10,
-                                            'offset': offset
-
-                                            })
-
+        profiles = profiles['items']
         except ApiError:
             return
-        profiles = profiles['items']
-
+        
         result = []
         for profile in profiles:
             if profile['is_closed'] == False:
