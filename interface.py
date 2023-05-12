@@ -13,8 +13,10 @@ current_year = datetime.datetime.now().year
 
 class BotInterface:
 
-    def __init__(self, comunity_token):
+    def __init__(self, comunity_token, acces_token):
         self.interface = vk_api.VkApi(token=comunity_token)
+        self.api = VKTools(acces_token) 
+        self.params = None
 
     def message_send(self, user_id, message=None, attachment=None): # отправка сообщений
         self.interface.method('messages.send',
@@ -43,7 +45,8 @@ class BotInterface:
 #                 sex = 1 if sex == 2 else 2
 
                 if command == 'привет':
-                    self.message_send(event.user_id, f'Привет, {f_name}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
+                    self.params = self.api.get_profile_info(event.user_id)
+                    self.message_send(event.user_id, f'Привет, {self.params["name"]}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
                 elif command == 'п' or command == 'с':
 #                     if sex == None:
 #                         sex = int(input('Отправьте:'
@@ -67,7 +70,7 @@ class BotInterface:
                             continue
                         else:
                             self.message_send(event.user_id,
-                                              f'{f_name}, встречайте: {name_found}, {"https://vk.com/id" + str(id_found)}')
+                                              f'{self.params["name"]}, встречайте: {self.params["name_found"], {"https://vk.com/id" + str(self.params["id_found"]}')
                             result_photos_get = core.tools.photos_get(id_found)
                             for photo in result_photos_get:
                                 photo_id = photo.get('id')
@@ -80,7 +83,7 @@ class BotInterface:
 
 
                 elif command == 'пока':
-                    self.message_send(event.user_id, f'До новых встреч, {f_name}')
+                    self.message_send(event.user_id, f'До новых встреч, {self.params["name"]}')
 
                 else:
                     self.message_send(event.user_id, 'Неизвестная команда.  введите "П" для поиска", или "пока" для выхода)')
