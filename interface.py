@@ -45,9 +45,9 @@ class BotInterface:
                 if command == 'привет':
                     self.message_send(event.user_id, f'Привет, {f_name}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
                 elif command == 'п' or command == 'с':
-                    if sex == None:
-                        sex = int(input('Отправьте:'
-                                        ' 1 - если Вы женщина, 2 - если Вы мужчина'))
+#                     if sex == None:
+#                         sex = int(input('Отправьте:'
+#                                         ' 1 - если Вы женщина, 2 - если Вы мужчина'))
                     while command != 'пока':
 
                         users = core.tools.user_serch(city_id, age_from, age_to, sex, 1, offset)
