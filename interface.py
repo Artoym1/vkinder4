@@ -46,7 +46,7 @@ class BotInterface:
 
                 if command == 'привет':
                     self.params = self.api.get_profile_info(event.user_id)
-                    self.message_send(event.user_id, f'Привет, {self.params["name"]}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
+                    self.message_send(event.user_id, f'Привет, {self.params["first_name"]}, чтобы начать поиск отправьте букву "П" или "С" для перехода к следующему найденному человеку')
                 elif command == 'п' or command == 'с':
 #                     if sex == None:
 #                         sex = int(input('Отправьте:'
@@ -70,7 +70,7 @@ class BotInterface:
                             continue
                         else:
                             self.message_send(event.user_id,
-                                              f'{self.params["name"]}, встречайте: {self.params["name_found"], {"https://vk.com/id" + str(self.params["id_found"]}')
+                                              f'{self.params["first_name"]}, встречайте: {self.params["name_found"], {"https://vk.com/id" + str(self.params["id_found"]}')
                             result_photos_get = core.tools.photos_get(id_found)
                             for photo in result_photos_get:
                                 photo_id = photo.get('id')
@@ -90,5 +90,5 @@ class BotInterface:
 
 
 if __name__ == '__main__':
-    bot = BotInterface(comunity_token)
+    bot = BotInterface(comunity_token, acces_token)
     bot.event_handler()
